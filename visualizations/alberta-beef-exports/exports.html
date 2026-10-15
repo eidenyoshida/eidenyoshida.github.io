@@ -123,6 +123,14 @@
           return html;
         }
 
+        // Compact currency label for tooltips, e.g. $1.15B, $234.9M, $86.82K.
+        function formatDollars(value) {
+          const formatted = d3.format('.4~s')(value)
+            .replace('G', 'B')
+            .replace('k', 'K');
+          return '$' + formatted;
+        }
+
         function showTooltip(html, event) {
           tooltip.html(html).style('opacity', 1);
           moveTooltip(event);
@@ -197,7 +205,7 @@
             });
             coords.forEach(d => {
               const value = exportsByCountry.get(d.location);
-              if (value) d.Exported = '$' + d3.format(',.0f')(value);
+              if (value) d.Exported = formatDollars(value);
             });
             exportsData = coords;
             coords.forEach(d => destinations.set(d.location, d));
