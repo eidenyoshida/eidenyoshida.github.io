@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Alberta Beef Exports</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://d3js.org/topojson.v1.min.js"></script>
   </head>
   <style>
@@ -116,10 +116,7 @@
 
         function detailRows(row, exclude) {
           const skip = exclude.concat(['lat', 'lon']);
-          let html = (row.lat && row.lon)
-            ? '<div><span class="label">Coordinates:</span> ' + row.lat + ', ' + row.lon + '</div>'
-            : '';
-          html += Object.keys(row)
+          let html = Object.keys(row)
             .filter(key => skip.indexOf(key) === -1 && row[key] !== '')
             .map(key => '<div><span class="label">' + key + ':</span> ' + row[key] + '</div>')
             .join('');
@@ -184,7 +181,7 @@
                 const destination = destinations.get(name);
                 let html = '<div class="title">' + name + '</div>';
                 html += destination
-                  ? '<div>Alberta beef export destination</div>' + detailRows(destination, ['location'])
+                  ? detailRows(destination, ['location'])
                   : '<div><span class="label">Exports:</span> none recorded</div>';
                 showTooltip(html, event);
               })
@@ -200,7 +197,7 @@
             });
             coords.forEach(d => {
               const value = exportsByCountry.get(d.location);
-              if (value) d.Dollars = d3.format(',')(value);
+              if (value) d.Exported = '$' + d3.format(',.0f')(value);
             });
             exportsData = coords;
             coords.forEach(d => destinations.set(d.location, d));
@@ -219,7 +216,7 @@
             groups
               .on('mouseover', function (event, d) {
                 let html = '<div class="title">Alberta &#8594; ' + d.location + '</div>';
-                html += '<div>Alberta beef export destination</div>' + detailRows(d, ['location']);
+                html += detailRows(d, ['location']);
                 showTooltip(html, event);
               })
               .on('mousemove', moveTooltip)
