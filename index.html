@@ -2,11 +2,132 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Eiden Yoshida</title>
+    <style>
+      :root {
+        --bg: #000000;
+        --fg: #ff8a1e;        /* amber / orange phosphor */
+        --fg-dim: #b35c0f;    /* dimmed orange for borders */
+        --glow: 0 0 6px rgba(255, 138, 30, 0.45);
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: var(--bg);
+      }
+
+      body {
+        font-family: "Courier New", Courier, "Lucida Console", monospace;
+        font-size: 18px;
+        line-height: 1.5;
+        color: var(--fg);
+        text-shadow: var(--glow);
+        min-height: 100vh;
+        box-sizing: border-box;
+        padding: 2rem 1.5rem;
+      }
+
+      .terminal {
+        max-width: 44rem;
+        margin: 0 auto;
+      }
+
+      .prompt::before {
+        content: "> ";
+        color: var(--fg-dim);
+      }
+
+      h1 {
+        font-family: inherit;
+        font-size: 1.4rem;
+        font-weight: bold;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin: 0 0 0.25rem 0;
+      }
+
+      .rule {
+        color: var(--fg-dim);
+        white-space: nowrap;
+        overflow: hidden;
+        margin: 0 0 1.5rem 0;
+      }
+
+      h2 {
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin: 0 0 0.5rem 0;
+      }
+
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      li {
+        margin: 0 0 0.35rem 0;
+      }
+
+      a {
+        color: var(--fg);
+        text-decoration: none;
+        border-bottom: 1px dotted var(--fg-dim);
+        padding: 0 2px;
+      }
+
+      a:hover,
+      a:focus {
+        background: var(--fg);
+        color: var(--bg);
+        text-shadow: none;
+        outline: none;
+      }
+
+      .footer {
+        margin-top: 2.5rem;
+        color: var(--fg-dim);
+      }
+
+      .cursor {
+        display: inline-block;
+        width: 0.6em;
+        height: 1.05em;
+        background: var(--fg);
+        box-shadow: var(--glow);
+        vertical-align: text-bottom;
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes blink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .cursor {
+          animation: none;
+        }
+      }
+    </style>
   </head>
   <body>
-    Visualizations
-    <br>
-    <a href="visualizations/alberta-beef-exports/exports.html">Alberta Beef Exports</a>
+    <main class="terminal">
+      <h1>Eiden Yoshida</h1>
+      <div class="rule">================================</div>
+
+      <h2>Visualizations</h2>
+      <ul>
+        <li class="prompt"><a href="visualizations/alberta-beef-exports/exports.html">Alberta Beef Exports</a></li>
+      </ul>
+
+      <p class="footer">eidenyoshida.github.io<span class="cursor"></span></p>
+    </main>
   </body>
 </html>
+
