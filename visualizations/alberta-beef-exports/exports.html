@@ -36,6 +36,14 @@
     .country.destination:hover {
       fill: #4f6773;
     }
+    /* Alberta: the export origin, drawn on top of Canada in a distinct color */
+    .country.alberta {
+      fill: #a86b2c;
+      stroke: #f0b877;
+    }
+    .country.alberta:hover {
+      fill: #c2823f;
+    }
     .exportLine{
       fill: none;
       stroke: red;
@@ -115,6 +123,13 @@
           return COUNTRY_NAME_ALIASES[raw] || raw;
         }
 
+        // Styling: Alberta is the export origin (distinct color); destinations are highlighted teal.
+        function countryClass(d) {
+          const name = countryName(d);
+          if (name === 'Alberta') return 'country alberta';
+          return 'country' + (destinations.has(name) ? ' destination' : '');
+        }
+
         function detailRows(row, exclude) {
           const skip = exclude.concat(['lat', 'lon']);
           let html = Object.keys(row)
@@ -183,10 +198,14 @@
               .data(countriesData)
               .enter()
               .append('path')
-              .attr('class', d => 'country' + (destinations.has(countryName(d)) ? ' destination' : ''))
+              .attr('class', countryClass)
               .attr('d', path)
               .on('mouseover', function (event, d) {
                 const name = countryName(d);
+                if (name === 'Alberta') {
+                  showTooltip('<div class="title">Alberta</div><div><span class="label">Role:</span> export origin</div>', event);
+                  return;
+                }
                 const destination = destinations.get(name);
                 let html = '<div class="title">' + name + '</div>';
                 html += destination
@@ -211,7 +230,7 @@
             exportsData = coords;
             coords.forEach(d => destinations.set(d.location, d));
             // Countries may already be rendered when the CSV resolves after the topology.
-            gCountries.selectAll('path').attr('class', d => 'country' + (destinations.has(countryName(d)) ? ' destination' : ''));
+            gCountries.selectAll('path').attr('class', countryClass);
 
             const groups = gExports.selectAll('g.export')
               .data(coords)

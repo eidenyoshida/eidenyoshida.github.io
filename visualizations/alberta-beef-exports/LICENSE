@@ -28,3 +28,8 @@ Agriculture and Forestry, Statistics and Data Development Section.
 
 Country boundary geometry (data/countries-110m.json): Natural Earth
 (public domain), via the D3 TopoJSON collection.
+
+Alberta province boundary geometry (added to data/countries-110m.json):
+click_that_hood (Code for Germany), public/data/canada.geojson —
+https://github.com/codeforgermany/click_that_hood , derived from the
+"ArcGIS Canada Boundary" dataset (ArcGIS item dcbcdf86939548af81efbd2d732336db).
